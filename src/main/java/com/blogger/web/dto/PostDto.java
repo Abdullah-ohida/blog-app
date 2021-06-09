@@ -1,17 +1,18 @@
 package com.blogger.web.dto;
 
-import com.blogger.data.models.Author;
-import com.blogger.data.models.Comment;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
-import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class PostDto {
+    @NotEmpty(message="Title cannot be empty")
     private String title;
 
+    @NotEmpty(message = "Content cannot be empty")
     private String content;
 
     private MultipartFile imageFile;

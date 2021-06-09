@@ -1,12 +1,6 @@
 package com.blogger.web.dto;
 
-import com.blogger.data.models.Post;
 import lombok.Data;
-import lombok.ToString;
-
-import javax.persistence.Column;
-import javax.persistence.OneToMany;
-import java.util.List;
 
 @Data
 public class AuthorDto {

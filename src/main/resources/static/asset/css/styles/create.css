@@ -1,0 +1,41 @@
+@import "style.css";
+
+form:not(form label){
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+}
+
+form h2{
+    line-height: 4;
+    font-size: 2rem;
+    text-transform: capitalize;
+    font-family: var(--header-font);
+}
+
+label{
+ font-size: 1.1rem;
+}
+
+.warning{
+    width: 100%;
+    background: #c7971d;
+    color: white;
+    padding: 0.5rem 0;
+    text-align: center;
+}
+
+/*.error{*/
+/*    font-size: 1.1rem;*/
+/*    color: red;*/
+/*}*/
+
+@media only screen and (max-width: 1000px) {
+    form{
+        width: 80%;
+    }
+}

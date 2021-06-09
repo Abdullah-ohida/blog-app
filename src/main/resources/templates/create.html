@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+
+    <link rel="stylesheet" th:href="@{/asset/css/styles/nav.css}">
+    <link rel="stylesheet" th:href="@{/asset/css/styles/footer.css}">
+    <link rel="stylesheet" th:href="@{/asset/css/media-query/footer.css}">
+    <link rel="stylesheet" th:href="@{/asset/css/media-query/nav.css}">
+    <link rel="stylesheet" th:href="@{/asset/css/media-query/style.css}">
+    <link rel="stylesheet" th:href="@{/asset/css/styles/post.css}">
+    <link rel="stylesheet" th:href="@{/asset/css/media-query/post.css}">
+    <link rel="stylesheet" th:href="@{/asset/css/styles/create.css}">
+    <script src="https://kit.fontawesome.com/e2052a1ca7.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+        <!-- Navigation   -->
+        <nav th:insert="/fragments.html :: topnav"></nav>
+    <!-- Navigation end   -->
+
+     <!--Form-->
+     <form th:action="@{/savePost}" method="post" enctype="multipart/form-data" th:object="${post}">
+
+        <h2>create a blog post</h2>
+         <div class="warning" th:if="${error}">
+             <span th:text="${errorMessage}"></span>
+         </div>
+
+         <label for="avatar">Choose your cover image</label>
+        <input th:field = "*{imageFile}" type="file" id="avatar" name="avatar" />
+
+         <input type="text" th:field ="*{title}" name="text" id="text" placeholder="Enter blog post title" />
+         <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+
+        <textarea th:field ="*{content}" name="message" id="message" cols="30" rows="10" placeholder="Post content here..."></textarea>
+        <input type="submit" value="post your comment">
+         <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
+
+    </form>
+            <footer th:insert="/fragments.html :: footer"></footer>
+
+    <!-- Scripts -->
+    <script src="../scripts/app.js"></script>
+</body>
+
+</html>

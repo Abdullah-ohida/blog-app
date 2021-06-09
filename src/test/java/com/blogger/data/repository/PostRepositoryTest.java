@@ -6,6 +6,7 @@ import com.blogger.data.models.Post;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,10 +19,12 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Slf4j
 @Transactional
+@Rollback(value = false)
 @Sql(scripts = "classpath:db/insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class PostRepositoryTest {
 
@@ -88,12 +91,16 @@ class PostRepositoryTest {
     }
 
 
+    @Test
+    @DisplayName("When post is create then author is created")
     void createAuthor() {
         log.info("Created a blog post --> {}", blogPost);
 //        Map relationship
         blogPost.setAuthor(author);
         author.addPost(blogPost);
         postRepository.save(blogPost);
+        Post savedPost = postRepository.findPostByTitle("What is Fintech?");
+        assertThat(savedPost.getTitle()).isNotNull();
         log.info("Blog post after saving to Db--> {}", blogPost);
     }
 
@@ -114,7 +121,7 @@ class PostRepositoryTest {
 
 
     @Test
-    @Rollback(value = false)
+
     void deleteAPostTest() {
         Post savedPost = postRepository.findById(41L).orElse(null);
         assertThat(savedPost).isNotNull();
@@ -150,7 +157,6 @@ class PostRepositoryTest {
     }
 
     @Test
-    @Rollback(value = false)
     void updatePostAuthorTest() {
         Post postToUpdate = postRepository.findById(41L).orElse(null);
         assertThat(postToUpdate).isNotNull();
@@ -170,7 +176,6 @@ class PostRepositoryTest {
     }
 
     @Test
-    @Rollback(value = false)
     void updatePostCommentTest(){
         Post postToUpdate = postRepository.findById(41L).orElse(null);
         assertThat(postToUpdate).isNotNull();
@@ -187,5 +192,16 @@ class PostRepositoryTest {
         assertThat(updatedPost.getComments().get(0).getCommentatorName()).isEqualTo("Adex");
 
         log.info("Updated Post --> {}", updatedPost);
+    }
+
+    @Test
+    @DisplayName("Find all post in descending order")
+    void getAllPostInDesc(){
+       List<Post> allPosts = postRepository.findByOrderByDatePublishedDesc();
+       assertTrue(allPosts.get(0).getDatePublished().isAfter(allPosts.get(1).getDatePublished()));
+
+       allPosts.forEach(post -> {
+           log.info("Post Data --> {}", post.getDatePublished());
+       });
     }
 }
