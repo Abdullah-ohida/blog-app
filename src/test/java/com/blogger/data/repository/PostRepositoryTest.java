@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 @Slf4j
 @Transactional
-@Rollback(value = false)
+//@Rollback(value = false)
 @Sql(scripts = "classpath:db/insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class PostRepositoryTest {
 
