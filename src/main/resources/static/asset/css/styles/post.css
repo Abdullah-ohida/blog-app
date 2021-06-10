@@ -1,16 +1,11 @@
 @import "style.css";
 
-.post-header{
-    /*min-height: 50vh;*/
-    background: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .post-header img{
-    position: absolute;
-    height: 20%;
+    width: 100%;
+    position: relative;
+    height: 60vh;
+    /*object-fit: contain;*/
+    z-index: -10;
 }
 
 
