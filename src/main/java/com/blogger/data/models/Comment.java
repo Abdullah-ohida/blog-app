@@ -19,7 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class Comment {
 
-    @Id()
+    @Id
     @GeneratedValue
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
